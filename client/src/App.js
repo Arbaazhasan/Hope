@@ -22,6 +22,7 @@ function App() {
 
   const { user, setUser, isAuthonticated, setIsAuthonticated, refreshData, loading } = useContext(Context);
 
+  
   useEffect(() => {
 
     axios.get(`${server}/user/me`, {
