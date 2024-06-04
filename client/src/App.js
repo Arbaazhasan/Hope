@@ -15,13 +15,14 @@ import UpdateUserInfo from './pages/UpdateUserInfo/UpdateUserInfo';
 import Loading from './components/Loading/Loading';
 import UserProfile from './pages/UserProfile/UserProfile.jsx';
 
-export const server = "http://localhost:4000/api/v1";
+export const server = "https://hope-api.vercel.app";
 
 
 function App() {
 
   const { user, setUser, isAuthonticated, setIsAuthonticated, refreshData, loading } = useContext(Context);
 
+  
   useEffect(() => {
 
     axios.get(`${server}/user/me`, {
