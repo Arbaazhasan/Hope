@@ -3,11 +3,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { server } from '../../App';
 import { Context } from '../..';
+import { Link } from 'react-router-dom';
 
 
 const ExploreFollowers = (userFollowerData) => {
 
+    const { setUserProfileId } = useContext(Context);
+
     const { followersList, followingList } = useContext(Context);
+
 
     const follwerData = userFollowerData.userFollowerData;
     const follwingData = userFollowerData.userFollowingData;
@@ -29,12 +33,12 @@ const ExploreFollowers = (userFollowerData) => {
 
                 {
                     follwerData && follwerData.map((i) => {
-                        return <div className="userProfileBox" key={i._id}>
+                        return <Link to={'/userprofile'} onClick={() => { setUserProfileId(i._id); }} className="userProfileBox" key={i._id}>
                             <div className="userProfilePicture">
                                 <img src={`image/${i.profilePicture}`} alt="" />
                             </div>
                             <p>{i.name}</p>
-                        </div>;
+                        </Link>;
                     })
                 }
 

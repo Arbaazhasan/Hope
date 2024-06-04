@@ -4,7 +4,7 @@ import axios from 'axios';
 import { server } from '../../App';
 import { Context } from '../..';
 
-const ProfileWindow = ({ username, email, followers, following, profilePhoto }) => {
+const ProfileWindow = ({ username, email, followers, following, profilePhoto, noOfPosts }) => {
     // const { profilePhoto } = useContext(Context);
     // console.log(username, email, followers, following);
     // console.log(profilePhoto)
@@ -26,21 +26,21 @@ const ProfileWindow = ({ username, email, followers, following, profilePhoto }) 
                     </div>
 
                     <div className="userNameAndBio">
-                        <p>{username}</p>
-                        <span>{email}</span>
+                        <p style={{ cursor: "pointer" }}>{username}</p>
+                        <span style={{ cursor: "pointer" }}>{email}</span>
                     </div>
 
                     <div className="userFollowList">
-                        <div className="userFollowings">
-                            <p>{followers.length}</p>
+                        <div className="userFollowings" style={{ cursor: "pointer" }}>
+                            <p >{followers.length}</p>
                             <span>Followers</span>
                         </div>
-                        <div className="userFollowers">
+                        <div className="userFollowers" style={{ cursor: "pointer" }}>
                             <p> {following.length}</p>
                             <span>Followings</span>
                         </div>
-                        <div className="userPosts" style={{ border: "none" }}>
-                            <p>31</p>
+                        <div className="userPosts" style={{ border: "none", cursor: "pointer" }}>
+                            <p>{noOfPosts}</p>
                             <span>Posts</span>
                         </div>
                     </div>

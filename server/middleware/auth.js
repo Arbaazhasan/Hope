@@ -4,7 +4,6 @@ import { User } from "../model/user.js";
 export const isAuthonticated = async (req, res, next) => {
 
     const { token } = req.cookies;
-    // console.log(token);
 
     if (!token) return res.status(400).json({
         success: false,

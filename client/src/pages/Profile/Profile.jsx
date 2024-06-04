@@ -32,6 +32,7 @@ const Profile = () => {
         postData, setPostData,
         setPostAccouont,
         profilePhoto,
+        noOfPosts,
         refreshData,
     } = useContext(Context);
     // console.log(user)
@@ -73,7 +74,7 @@ const Profile = () => {
 
                 {/* User Profile Window */}
 
-                <ProfileWindow username={userName} email={userEmail} followers={followers} following={following} profilePhoto={profilePhoto} />
+                <ProfileWindow username={userName} email={userEmail} followers={followers} following={following} profilePhoto={profilePhoto} noOfPosts={noOfPosts} />
                 {/* {console.log(profilePhoto)} */}
 
                 {/* PostBar */}
@@ -85,7 +86,7 @@ const Profile = () => {
 
                 {
                     postData?.map((i) => (
-                        < PostWindow id={i._id} userName={userName} profilePhoto={profilePhoto} userId={i.userId} desc={i.desc} img={i.img} likes={i.likes} key={i._id} />
+                        < PostWindow id={i._id} userName={userName} profilePhoto={profilePhoto} userId={i.userId} desc={i.desc} img={i.img} likes={i.likes} postDate={i.createdAt} key={i._id} />
 
                     ))
 
@@ -94,7 +95,7 @@ const Profile = () => {
             </div>
             <div className="profileRight">
                 <FollowersList />
-                <Peoples />
+                {/* <Peoples /> */}
             </div>
         </div>
     );

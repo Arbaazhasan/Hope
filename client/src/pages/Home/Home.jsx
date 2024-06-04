@@ -15,6 +15,7 @@ import PeopleWindow from '../../components/PeopleWindow/PeopleWindow.jsx';
 import AaccountSettings from '../../components/AccountSettings/AaccountSettings.jsx';
 import ExploreFollowers from '../../components/ExploreFollowers/ExploreFollowers.jsx';
 import SearchUser from '../../components/SearchUser/SearchUser.jsx';
+import CreatePost from '../../components/CreatePost/CreatePost.jsx';
 
 
 const Home = () => {
@@ -41,9 +42,19 @@ const Home = () => {
         followersList,
         followingList,
         newFeed,
-        searchUser
+        searchUser,
+        setNoOfPosts,
+        isCreatePost, setIsCreatePost
 
     } = useContext(Context);
+
+    const createPostHandler = () => {
+        setIsCreatePost(pre => !pre);
+
+    };
+
+
+
     const [allSavedPosts, setAllSavedPosts] = useState([]);
     const [allLikedPosts, setAllLikedPosts] = useState([]);
 
@@ -51,6 +62,7 @@ const Home = () => {
     const [userFollwersList, setUserFollowersList] = useState([]);
 
     const [followingUserPosts, setFollowingUserPosts] = useState([]);
+
 
 
 
@@ -66,7 +78,7 @@ const Home = () => {
                     {
                         withCredentials: true
                     }).then((res) => {
-                        const { name, email, followers, following, bio, status, lives, work, profilePicture } = res.data.user;
+                        const { name, email, followers, following, bio, status, lives, work, profilePicture, getNoOfPosts } = res.data.user;
                         setUserName(name);
                         setUserEmail(email);
                         setFollowers(followers);
@@ -76,6 +88,7 @@ const Home = () => {
                         setLives(lives);
                         setWork(work);
                         setProfilePhoto(profilePicture);
+                        setNoOfPosts(getNoOfPosts);
 
                     });
 
@@ -144,7 +157,13 @@ const Home = () => {
                 }).then((res) => {
                     // console.log(res.data.userPosts);
                     setFollowingUserPosts(res.data.userPosts);
+
+                    const stamp = res.data.userPosts[0] && res.data.userPosts[0].createdAt;
+
+
                 });
+
+
 
 
             } catch (error) {
@@ -207,6 +226,13 @@ const Home = () => {
     return (
         <>
             <div className='home'>
+
+                {
+                    isCreatePost && <CreatePost />
+                }
+
+
+
                 <div className="homeLeft">
 
                     {/* User Profile Icon and Username */}
@@ -226,7 +252,7 @@ const Home = () => {
                     <ExploreMenu />
 
                     {/* HOme page left side  create post Button */}
-                    <button >Create Post</button>
+                    <button onClick={createPostHandler} >Create Post</button>
 
                 </div>
 
@@ -250,7 +276,7 @@ const Home = () => {
                     {
 
                         homePage && followingUserPosts?.map((i) => (
-                            < PostWindow id={i._id} userName={i.username} userId={i.userId} desc={i.desc} img={i.img} likes={i.likes} profilePhoto={i.profilePicture} key={i._id} />
+                            < PostWindow id={i._id} userName={i.username} userId={i.userId} desc={i.desc} img={i.img} likes={i.likes} profilePhoto={i.profilePicture} postDate={i.createdAt} key={i._id} />
 
                         ))
 
@@ -285,7 +311,7 @@ const Home = () => {
                     {
 
                         savedPostsPage && allSavedPosts?.map((i) => (
-                            < PostWindow id={i._id} userName={i.username} userId={i.userId} desc={i.desc} img={i.img} likes={i.likes} key={i._id} />
+                            < PostWindow id={i._id} userName={i.username} userId={i.userId} desc={i.desc} img={i.img} likes={i.likes} profilePhoto={i.profilePicture} postDate={i.createdAt} key={i._id} />
 
                         ))
 
@@ -296,7 +322,7 @@ const Home = () => {
                     {newFeed && <h2 style={{ margin: "15px 0px 0px 20px" }}>New Feed</h2>}
                     {
                         newFeed && allUsersPosts?.map((i) => (
-                            < PostWindow id={i._id} userName={i.username} userId={i.userId} desc={i.desc} img={i.img} likes={i.likes} profilePhoto={i.profilePicture} key={i._id} />
+                            < PostWindow id={i._id} userName={i.username} userId={i.userId} desc={i.desc} img={i.img} likes={i.likes} profilePhoto={i.profilePicture} postDate={i.createdAt} key={i._id} />
 
                         ))
                     }
@@ -308,7 +334,7 @@ const Home = () => {
                     {
 
                         likedPosts && allLikedPosts?.map((i) => (
-                            < PostWindow id={i._id} userName={i.username} userId={i.userId} desc={i.desc} img={i.img} likes={i.likes} key={i._id} />
+                            < PostWindow id={i._id} userName={i.username} userId={i.userId} desc={i.desc} img={i.img} likes={i.likes} profilePhoto={i.profilePicture} postDate={i.createdAt} key={i._id} />
 
                         ))
 
@@ -328,9 +354,9 @@ const Home = () => {
                 <div className="homeRight">
                     {/* Message Inbox */}
 
-                    <MessageBox />
+                    {/* <MessageBox /> */}
 
-                    <RequestBox />
+                    {/* <RequestBox /> */}
 
                     <Peoples />
 

@@ -1,11 +1,10 @@
-import mongoose, { mongo } from "mongoose";
-
+import mongoose from "mongoose";
 
 const PostSchema = new mongoose.Schema(
     {
         userId: {
             type: String,
-            require: true
+            required: true // Corrected typo
         },
         username: {
             type: String
@@ -23,9 +22,12 @@ const PostSchema = new mongoose.Schema(
         comment: {
             type: Array,
             default: []
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now // Automatically set to the current date and time when a document is created
         }
-    },
-
+    }
 );
 
 export const Post = mongoose.model("Post", PostSchema);

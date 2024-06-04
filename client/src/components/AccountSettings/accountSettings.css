@@ -45,6 +45,8 @@
     font-weight: bold;
     border-radius: 7px;
     color: gray;
+    cursor: pointer;
+
 }
 
 .ChangePasswordWidnowClose>label:hover {
@@ -87,6 +89,13 @@
 
 .ChangePassword>form>input:focus {
     outline: none;
+}
+
+.ChangePassword>form>p {
+    color: red;
+    font-size: small;
+    text-align: left;
+    width: 100%;
 }
 
 .ChangePassword>form>button {

@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const PostWindow = ({ id, userName, profilePhoto, userId, desc, img, likes }) => {
+const PostWindow = ({ id, userName, profilePhoto, userId, desc, img, likes, postDate }) => {
 
     // console.log(likes);
     const { postAccount, refreshData, setRefreshData, setUserProfileId } = useContext(Context);
@@ -33,6 +33,22 @@ const PostWindow = ({ id, userName, profilePhoto, userId, desc, img, likes }) =>
 
     const [checkUrl, setCheckUrl] = useState();
 
+
+    const postDateHandler = (stamp) => {
+
+        const timestamp = new Date(stamp);
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        const year = timestamp.getFullYear();
+        const monthIndex = timestamp.getMonth();
+        const monthName = months[monthIndex];
+        const day = ('0' + timestamp.getDate()).slice(-2);
+
+        console.log(`Date: ${day}-${monthName}-${year}`);
+        const postDate = ` ${day}-${monthName}-${year}`;
+        return postDate;
+
+    };
 
 
 
@@ -76,17 +92,7 @@ const PostWindow = ({ id, userName, profilePhoto, userId, desc, img, likes }) =>
     };
 
     const saveUserPost = async () => {
-        // axios.put(`${server}/post/savepost/${id}`, {
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     withCredentials: true,
 
-        // }).then((res) => {
-        //     console.log(res);
-        // }).catch((error) => {
-        //     console.log(error);
-        // });
 
         const { data } = await axios.put(`${server}/post/savepost/${id}`, {}, {
             headers: {
@@ -183,12 +189,14 @@ const PostWindow = ({ id, userName, profilePhoto, userId, desc, img, likes }) =>
         <div className="postWindow">
             <div className="postUsername">
                 <div className='postWindwoProfileiPhoto'>
+
                     <img src={`image/${profilePhoto ? profilePhoto : "usericon.png"}`} alt="ProfileIcon" />
 
                 </div>
                 <div>
                     <Link to={'/userprofile'} onClick={() => { setUserProfileId(userId); }}>{userName}</Link>
-                    <p>Dubai, 15 Minutes Ago</p>
+                    {/* <p>Dubai, 15 Minutes Ago</p> */}
+                    <p>{postDateHandler(postDate)}</p>
                 </div>
 
                 {

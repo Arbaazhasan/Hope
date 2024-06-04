@@ -38,9 +38,11 @@ const AppWrapper = () => {
   const [explore, setExplore] = useState(false);
   const [followersList, setFollowersList] = useState(false);
   const [followingList, setFollowingList] = useState(false);
+  const [noOfPosts, setNoOfPosts] = useState();
   const [newFeed, setNewFeed] = useState(false);
   const [searchUser, setSearchUser] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
+  const [isCreatePost, setIsCreatePost] = useState(false);
 
 
 
@@ -82,11 +84,13 @@ const AppWrapper = () => {
       explore, setExplore,
       followersList, setFollowersList,
       followingList, setFollowingList,
+      noOfPosts, setNoOfPosts,
       newFeed, setNewFeed,
       searchUser, setSearchUser,
       searchUserData, setSearchUserData,
       userProfileId, setUserProfileId,
       isSearch, setIsSearch,
+      isCreatePost, setIsCreatePost,
 
 
       val, setVal

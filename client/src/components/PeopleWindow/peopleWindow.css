@@ -42,6 +42,9 @@
     align-items: center;
     justify-content: space-evenly;
     margin-top: 20px;
+    text-decoration: none;
+    color: black;
+
 }
 
 .userProfileBox>p {
@@ -50,6 +53,7 @@
     text-align: center;
     overflow: hidden;
     white-space: nowrap;
+    cursor: pointer;
 }
 
 .userProfileBox:hover {

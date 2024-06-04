@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import "./peopleWindow.css";
 import axios from 'axios';
 import { server } from '../../App';
+import { Link } from 'react-router-dom';
+import { Context } from '../..';
 
 
 const PeopleWindow = () => {
 
+    const { setUserProfileId } = useContext(Context);
 
     const [peopleAlluserData, setPeopleAlluserData] = useState([]);
+
     const [checkIsFollow, setCheckIsFollow] = useState();
 
     const [reRenderData, setReRenderData] = useState(false);
@@ -78,12 +82,15 @@ const PeopleWindow = () => {
                 {
                     peopleAlluserData.map((i) => {
                         return <div className="userProfileBox" key={i._id}>
-                            <div className="userProfilePicture">
+
+
+                            <Link to={'/userprofile'} onClick={() => { setUserProfileId(i._id); }} className="userProfilePicture">
                                 <img src={`image/${i.profilePicture ? i.profilePicture : "usericon.png"}`} alt="" />
-                            </div>
+                            </Link>
                             <p>{i.name}</p>
                             <div ><button onClick={() => followUser(i._id)}>{i.isFollow ? "Unfollow" : "Follow"}</button>
                             </div>
+
                         </div>;
                     }
                     )
@@ -95,4 +102,4 @@ const PeopleWindow = () => {
     );
 };
 
-export default PeopleWindow;
+export default PeopleWindow;;;

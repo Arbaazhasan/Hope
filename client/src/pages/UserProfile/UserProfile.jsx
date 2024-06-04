@@ -15,6 +15,7 @@ import { server } from '../../App';
 const UserProfile = () => {
 
     const [userData, setUserData] = useState([]);
+    const { setLoading } = useContext(Context);
 
 
     const [userID, setUserId] = useState();
@@ -28,6 +29,7 @@ const UserProfile = () => {
     const [work, setWork] = useState();
     const [profilePhoto, setProfilePhoto] = useState();
     const [postData, setPostData] = useState();
+    const [noOfPosts, setNoOfPosts] = useState();
 
 
 
@@ -63,6 +65,8 @@ const UserProfile = () => {
         // Getting User Profile Data
 
         const fetchData = async () => {
+            setLoading(true);
+
             try {
                 const { data } = await axios.get(`${server}/user/getuserprofiledata/${userProfileId}`, {
                     headers: {
@@ -72,6 +76,7 @@ const UserProfile = () => {
                 });
 
                 setUserData(data.userProfile);
+                setLoading(false);
 
 
             } catch (error) {
@@ -103,6 +108,7 @@ const UserProfile = () => {
         setStatus(userData.status);
         setLives(userData.lives);
         setWork(userData.work);
+        setNoOfPosts(userData.getNoOfPosts);
 
     }, [userData]);
 
@@ -121,7 +127,7 @@ const UserProfile = () => {
 
                 {/* User Profile Window */}
 
-                <ProfileWindow username={userName} email={userEmail} followers={followers} following={following} profilePhoto={profilePhoto} />
+                <ProfileWindow username={userName} email={userEmail} followers={followers} following={following} profilePhoto={profilePhoto} noOfPosts={noOfPosts} />
 
                 {/* PostBar */}
 
@@ -132,7 +138,7 @@ const UserProfile = () => {
 
                 {
                     postData?.map((i) => (
-                        < PostWindow id={i._id} userName={userName} profilePhoto={profilePhoto} userId={i.userId} desc={i.desc} img={i.img} likes={i.likes} key={i._id} />
+                        < PostWindow id={i._id} userName={userName} profilePhoto={profilePhoto} userId={i.userId} desc={i.desc} img={i.img} likes={i.likes} postDate={i.createdAt} key={i._id} />
 
                     ))
 

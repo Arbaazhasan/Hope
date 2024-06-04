@@ -51,7 +51,7 @@ const PostBar = () => {
             </div>
 
             <form onSubmit={submitHandler} encType='multipart/form-data'>
-                <input type="text" placeholder="Whats's in your mind, Diana Ayi ?" name="profilePostBar" onChange={(e) => setPostData(e.target.value)} value={postData} />
+                <input type="text" placeholder="Whats's in your mind" name="profilePostBar" onChange={(e) => setPostData(e.target.value)} value={postData} />
                 <input type="file" id='uploadBtn' name="profileImage" hidden onChange={(e) => { setPostFile(e.target.files[0]); }} />
                 <label htmlFor="uploadBtn"><BiImageAdd size={25} /></label>
                 <button type='submit' >Post</button>

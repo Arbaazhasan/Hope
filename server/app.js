@@ -23,6 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
 app.use(cors({
     origin: process.env.CROS_ORIGIN,
     credentials: true,
@@ -33,6 +34,7 @@ app.use(cors({
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/post", postRouter);
+
 
 
 // App HOme Page

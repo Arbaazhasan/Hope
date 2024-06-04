@@ -87,10 +87,24 @@ export const login = async (req, res) => {
 export const getMyProfile = async (req, res) => {
 
     try {
-        res.status(200).json({
-            success: true,
-            user: req.user
-        });
+
+        const getPosts = await Post.find({ userId: req.user._id });
+
+        if (getPosts) {
+            const profileObj = { ...req.user._doc, getNoOfPosts: getPosts.length };
+
+
+            res.status(200).json({
+
+                success: true,
+                user: profileObj
+
+            });
+
+        }
+
+
+
     } catch (error) {
         res.status(500).json({
             success: true,
@@ -113,6 +127,49 @@ export const logout = (req, res) => {
         success: true,
         message: "Logout!!!"
     });
+};
+
+
+export const resetPassword = async (req, res) => {
+
+    try {
+
+        const { newPassword } = req.body;
+
+        const getUser = await User.findById({ _id: req.user._id }).select("+password");
+
+
+        if (!getUser) return res.status(400).json({
+            success: false,
+            message: "user not found !!!"
+        });
+
+
+
+        if (!newPassword === getUser.password) return res.status(400).json({
+            success: false,
+            message: "Incorrect Current Password !!!"
+        });
+
+        await User.findByIdAndUpdate(getUser._id, { password: newPassword });
+
+
+        res.status(200).json({
+            success: true,
+            message: "Update"
+        });
+
+
+    } catch (error) {
+
+        res.status(200).json({
+            success: false,
+            message: "Internal Server Error !!!",
+            error: error.messsage
+        });
+
+    }
+
 };
 
 
@@ -425,6 +482,8 @@ export const followingPost = async (req, res) => {
                         img: post.img,
                         likes: post.likes,
                         comments: post.comment,
+                        createdAt: post.createdAt,
+
                     };
 
                     userPosts.push(postData);
@@ -472,14 +531,18 @@ export const getUserProfileData = async (req, res) => {
 
         const userProfile = await User.findById(userId);
 
+        const getNoOfPosts = await Post.find({ userId });
+
         if (!userProfile) return res.status(200).json({
             success: false,
             message: "User not Found !!!"
         });
 
+        const profileObj = { ...userProfile._doc, getNoOfPosts: getNoOfPosts.length };
+
         res.status(200).json({
             success: true,
-            userProfile: userProfile
+            userProfile: profileObj
         });
     } catch (error) {
 

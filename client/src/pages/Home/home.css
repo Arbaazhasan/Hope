@@ -91,6 +91,12 @@
     border: none;
     color: white;
     font-weight: bold;
+    cursor: pointer;
+    transition: .4s;
+    border: 5px solid transparent;
+    font-size: large;
+
+
 }
 
 .homeLeft>button:hover {
